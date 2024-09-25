@@ -53,7 +53,7 @@ export const ragMiddleware: Experimental_LanguageModelV1Middleware = {
       model: openai("gpt-4o-mini", { structuredOutputs: true }),
       output: "enum",
       enum: ["question", "statement", "other"],
-      system: "classify the user message as a question, statement, or other",
+      system: "classify the user message as a question, statement, or other.",
       prompt: lastUserMessageContent,
     });
 
@@ -67,15 +67,20 @@ export const ragMiddleware: Experimental_LanguageModelV1Middleware = {
     const { text: hypotheticalAnswer } = await generateText({
       // fast model for generating hypothetical answer:
       model: openai("gpt-4o-mini", { structuredOutputs: true }),
-      system: "Answer the users question:",
+      system: "Answer the users question",
       prompt: lastUserMessageContent,
     });
+
+    // console.log("contesta en texto plano", hypotheticalAnswer);
 
     // Embed the hypothetical answer
     const { embedding: hypotheticalAnswerEmbedding } = await embed({
       model: openai.embedding("text-embedding-3-small"),
       value: hypotheticalAnswer,
     });
+
+
+    // console.log("embedding of the answer", hypotheticalAnswerEmbedding);
 
     // find relevant chunks based on the selection
     const chunksBySelection = await getChunksByFilePaths({

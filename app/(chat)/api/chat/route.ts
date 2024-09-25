@@ -14,8 +14,13 @@ export async function POST(request: Request) {
 
   const result = await streamText({
     model: customModel,
-    system:
-      "you are a friendly assistant! keep your responses concise and helpful.",
+    // THIS IS THE DEFAULT SYSTEM PROMPT
+     system: 'Answer the users questions',
+    // TODO: Darle personalidad a tu chatbot!!
+    // system: "You are a Hogwarts teacher that is very formal and uses old english words." +
+    // "Please mention that you are a Hogwarts teacher" +
+    // "you answer the users questions:",
+    
     messages: convertToCoreMessages(messages),
     experimental_providerMetadata: {
       files: {
